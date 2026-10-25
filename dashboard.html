@@ -1,0 +1,2418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DRISHTI | AI Security Center</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            background:
+                radial-gradient(
+                    circle at top right,
+                    #10291f 0%,
+                    #06120f 35%,
+                    #030907 100%
+                );
+
+            color: #e8fff5;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+
+            padding: 22px 35px;
+
+            border-bottom:
+                1px solid #17382e;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            background:
+                rgba(3, 12, 9, 0.85);
+
+            backdrop-filter:
+                blur(10px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .logo {
+
+            font-size: 29px;
+
+            font-weight: 800;
+
+            letter-spacing: 3px;
+
+            color: #28ff9c;
+
+            text-shadow:
+                0 0 15px
+                rgba(40, 255, 156, 0.25);
+        }
+
+
+        .subtitle {
+
+            color: #78988c;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .system-live {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: #32ff9d;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+
+        .live-dot {
+
+            width: 9px;
+
+            height: 9px;
+
+            background: #32ff9d;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 12px
+                #32ff9d;
+
+            animation:
+                livePulse 1.5s infinite;
+        }
+
+
+        @keyframes livePulse {
+
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+        .container {
+
+            max-width: 1500px;
+
+            margin: 25px auto;
+
+            padding:
+                0 25px 40px;
+        }
+
+
+        /* =====================================================
+           STATUS CARDS
+        ===================================================== */
+
+        .status-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .status-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0b1d17,
+                    #07130f
+                );
+
+            border:
+                1px solid #174033;
+
+            border-radius: 14px;
+
+            padding: 16px 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content:
+                space-between;
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+        }
+
+
+        .status-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                #28785c;
+        }
+
+
+        .status-title {
+
+            color: #78998d;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .status-value {
+
+            color: #32ff9d;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        .status-value.offline {
+
+            color: #ff5555;
+        }
+
+
+        .status-icon {
+
+            font-size: 24px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .statistics {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .stat-card {
+
+            background: #091a15;
+
+            border:
+                1px solid #174033;
+
+            border-radius: 14px;
+
+            padding: 18px;
+
+            text-align: center;
+        }
+
+
+        .stat-number {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #32ff9d;
+        }
+
+
+        .stat-number.object-number {
+
+            color: #59bfff;
+        }
+
+
+        .stat-number.unknown-number {
+
+            color: #ff5555;
+        }
+
+
+        .stat-label {
+
+            margin-top: 5px;
+
+            color: #78998d;
+
+            font-size: 12px;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================================
+           SECURITY ALERT
+        ===================================================== */
+
+        .alert {
+
+            display: none;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #351313,
+                    #21100f
+                );
+
+            border:
+                1px solid #ff4444;
+
+            color: #ff6666;
+
+            border-radius: 12px;
+
+            padding: 14px 18px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+
+            animation:
+                alertPulse 1.5s infinite;
+        }
+
+
+        @keyframes alertPulse {
+
+            0% {
+                box-shadow:
+                    0 0 0
+                    rgba(255, 68, 68, 0.05);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 22px
+                    rgba(255, 68, 68, 0.15);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0
+                    rgba(255, 68, 68, 0.05);
+            }
+        }
+
+
+        /* =====================================================
+           MAIN GRID
+        ===================================================== */
+
+        .main-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 2fr)
+                minmax(320px, 1fr);
+
+            gap: 20px;
+
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #091a15,
+                    #06110d
+                );
+
+            border:
+                1px solid #174033;
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 0 35px
+                rgba(0, 255, 150, 0.035);
+        }
+
+
+        .card-title {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 16px;
+        }
+
+
+        h2 {
+
+            margin: 0;
+
+            color: #31ff9d;
+
+            font-size: 19px;
+        }
+
+
+        .title-badge {
+
+            font-size: 10px;
+
+            color: #6f9e8c;
+
+            border:
+                1px solid #214b3c;
+
+            padding:
+                5px 9px;
+
+            border-radius: 20px;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================================
+           CAMERA
+        ===================================================== */
+
+        .camera-container {
+
+            background: #020806;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            width: 100%;
+
+            min-height: 400px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid #123127;
+        }
+
+
+        #camera {
+
+            display: block;
+
+            width: 100%;
+
+            height: auto;
+
+            max-height: 620px;
+
+            object-fit: contain;
+
+            border-radius: 13px;
+        }
+
+
+        .camera-overlay {
+
+            position: absolute;
+
+            top: 12px;
+
+            left: 12px;
+
+            background:
+                rgba(0, 0, 0, 0.65);
+
+            border:
+                1px solid
+                rgba(50, 255, 157, 0.3);
+
+            color: #32ff9d;
+
+            padding:
+                6px 10px;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           CAMERA STATUS
+        ===================================================== */
+
+        .camera-status {
+
+            margin-top: 12px;
+
+            padding: 12px 14px;
+
+            background: #06100d;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            color: #78998d;
+
+            font-size: 13px;
+        }
+
+
+        .connected {
+
+            color: #32ff9d;
+
+            font-weight: bold;
+        }
+
+
+        .disconnected {
+
+            color: #ff5555;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           RIGHT COLUMN
+        ===================================================== */
+
+        .side-column {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 20px;
+        }
+
+
+        /* =====================================================
+           DETECTION LIST
+        ===================================================== */
+
+        .detection-list {
+
+            max-height: 280px;
+
+            overflow-y: auto;
+
+            padding-right: 3px;
+        }
+
+
+        .detection-list::-webkit-scrollbar {
+
+            width: 5px;
+        }
+
+
+        .detection-list::-webkit-scrollbar-thumb {
+
+            background: #1b4d3c;
+
+            border-radius: 10px;
+        }
+
+
+        .detection-item {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding: 11px 12px;
+
+            margin-bottom: 8px;
+
+            background: #10251e;
+
+            border-radius: 9px;
+
+            border-left:
+                3px solid #59bfff;
+        }
+
+
+        .detection-name {
+
+            color: #ffffff;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+
+        .detection-confidence {
+
+            color: #59bfff;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .object-count {
+
+            background: #123427;
+
+            color: #59bfff;
+
+            padding:
+                3px 7px;
+
+            border-radius: 12px;
+
+            font-size: 10px;
+
+            margin-left: 6px;
+        }
+
+
+        /* =====================================================
+           FACE LIST
+        ===================================================== */
+
+        .face-list {
+
+            max-height: 240px;
+
+            overflow-y: auto;
+        }
+
+
+        .face-item {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding: 12px;
+
+            margin-bottom: 8px;
+
+            background: #102a21;
+
+            border-radius: 9px;
+
+            border-left:
+                3px solid #32ff9d;
+        }
+
+
+        .face-item.unknown {
+
+            border-left-color:
+                #ff4444;
+
+            background:
+                #241313;
+        }
+
+
+        .face-name {
+
+            font-weight: bold;
+
+            color: #ffffff;
+        }
+
+
+        .face-name.unknown {
+
+            color: #ff5555;
+        }
+
+
+        .face-confidence {
+
+            color: #32ff9d;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .face-confidence.unknown {
+
+            color: #ff5555;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty {
+
+            color: #648279;
+
+            padding: 14px 3px;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           REGISTERED PEOPLE
+        ===================================================== */
+
+        .registered-list {
+
+            max-height: 180px;
+
+            overflow-y: auto;
+        }
+
+
+        .registered-person {
+
+            padding: 9px 12px;
+
+            margin-top: 7px;
+
+            background: #0d241d;
+
+            border-radius: 8px;
+
+            color: #ffffff;
+
+            font-size: 13px;
+        }
+
+
+        .registered-person::before {
+
+            content: "●";
+
+            color: #28ff9c;
+
+            margin-right: 8px;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .button-row {
+
+            display: flex;
+
+            gap: 9px;
+
+            flex-wrap: wrap;
+
+            margin-top: 15px;
+        }
+
+
+        button {
+
+            border: none;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-weight: bold;
+
+            border-radius: 8px;
+
+            padding:
+                11px 15px;
+
+            transition:
+                0.2s;
+        }
+
+
+        .refresh {
+
+            background: #25f89a;
+
+            color: #02120c;
+        }
+
+
+        .refresh:hover {
+
+            background: #55ffb4;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .events-button {
+
+            background: transparent;
+
+            color: #28ff9c;
+
+            border:
+                1px solid #28ff9c;
+        }
+
+
+        .events-button:hover {
+
+            background: #28ff9c;
+
+            color: #06120f;
+        }
+
+
+        /* =====================================================
+           OBJECT SUMMARY
+        ===================================================== */
+
+        .object-summary {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .object-tag {
+
+            padding:
+                5px 9px;
+
+            background: #102a36;
+
+            border:
+                1px solid #245269;
+
+            color: #59bfff;
+
+            border-radius: 15px;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           FOOTER INFO
+        ===================================================== */
+
+        .system-info {
+
+            margin-top: 20px;
+
+            padding: 11px 14px;
+
+            background: #06100d;
+
+            border-radius: 9px;
+
+            color: #58766c;
+
+            font-size: 11px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .status-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .statistics {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .main-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            header {
+
+                padding:
+                    18px 20px;
+
+                align-items:
+                    flex-start;
+
+                gap: 12px;
+
+                flex-direction:
+                    column;
+            }
+
+
+            .container {
+
+                padding:
+                    0 15px 30px;
+            }
+
+
+            .status-grid,
+            .statistics {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .camera-container {
+
+                min-height: 250px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="brand">
+
+        <div>
+
+            <div class="logo">
+                DRISHTI
+            </div>
+
+            <div class="subtitle">
+                REAL-TIME OBJECT DETECTION & SECURITY MONITORING
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-live">
+
+        <span class="live-dot"></span>
+
+        SYSTEM LIVE
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         SYSTEM STATUS
+    ====================================================== -->
+
+    <div class="status-grid">
+
+
+        <div class="status-card">
+
+            <div>
+
+                <div class="status-title">
+                    CAMERA
+                </div>
+
+                <div
+                    id="cameraSystemStatus"
+                    class="status-value"
+                >
+                    CHECKING
+                </div>
+
+            </div>
+
+            <div class="status-icon">
+                📷
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div>
+
+                <div class="status-title">
+                    FACE AI
+                </div>
+
+                <div
+                    id="aiSystemStatus"
+                    class="status-value"
+                >
+                    CHECKING
+                </div>
+
+            </div>
+
+            <div class="status-icon">
+                🧠
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div>
+
+                <div class="status-title">
+                    YOLO OBJECT AI
+                </div>
+
+                <div
+                    id="objectSystemStatus"
+                    class="status-value"
+                >
+                    CHECKING
+                </div>
+
+            </div>
+
+            <div class="status-icon">
+                🎯
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div>
+
+                <div class="status-title">
+                    DATABASE
+                </div>
+
+                <div
+                    id="databaseStatus"
+                    class="status-value"
+                >
+                    CHECKING
+                </div>
+
+            </div>
+
+            <div class="status-icon">
+                🗄️
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <div class="statistics">
+
+
+        <div class="stat-card">
+
+            <div
+                id="faceCount"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                FACES DETECTED
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div
+                id="objectCount"
+                class="stat-number object-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                OBJECTS DETECTED
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div
+                id="authorizedCount"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                AUTHORIZED FACES
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div
+                id="unknownCount"
+                class="stat-number unknown-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                UNKNOWN FACES
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SECURITY ALERT
+    ====================================================== -->
+
+    <div
+        id="securityAlert"
+        class="alert"
+    >
+
+        🔴 SECURITY ALERT —
+        UNKNOWN PERSON DETECTED
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MAIN GRID
+    ====================================================== -->
+
+    <div class="main-grid">
+
+
+        <!-- =================================================
+             CAMERA
+        ================================================== -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <h2>
+                    Live AI Camera
+                </h2>
+
+                <span class="title-badge">
+                    YOLO11s + YuNet + SFace
+                </span>
+
+            </div>
+
+
+            <div class="camera-container">
+
+                <img
+                    id="camera"
+                    src="{{ url_for('video_feed') }}"
+                    alt="DRISHTI Camera"
+                    onerror="cameraError()"
+                >
+
+                <div class="camera-overlay">
+                    ● LIVE AI FEED
+                </div>
+
+            </div>
+
+
+            <div class="camera-status">
+
+                <span>
+                    Camera Stream
+                </span>
+
+                <strong
+                    id="cameraStatus"
+                    class="connected"
+                >
+                    CONNECTING
+                </strong>
+
+            </div>
+
+
+            <div class="system-info">
+
+                <span>
+                    Face Recognition:
+                    <strong id="faceInfo">
+                        --
+                    </strong>
+                </span>
+
+                <span>
+                    Objects:
+                    <strong id="objectInfo">
+                        --
+                    </strong>
+                </span>
+
+                <span>
+                    Registered:
+                    <strong id="registeredInfo">
+                        --
+                    </strong>
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SIDE COLUMN
+        ================================================== -->
+
+        <div class="side-column">
+
+
+            <!-- =============================================
+                 OBJECT DETECTION
+            ============================================== -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        Object Detection
+                    </h2>
+
+                    <span
+                        id="objectLiveBadge"
+                        class="title-badge"
+                    >
+                        LIVE
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="objectSummary"
+                    class="object-summary"
+                >
+                </div>
+
+
+                <div
+                    id="objects"
+                    class="detection-list"
+                >
+
+                    <div class="empty">
+                        Waiting for object detection...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 FACE RECOGNITION
+            ============================================== -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        Face Recognition
+                    </h2>
+
+                    <span class="title-badge">
+                        SFace
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="people"
+                    class="face-list"
+                >
+
+                    <div class="empty">
+                        Waiting for face detection...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 REGISTERED PEOPLE
+            ============================================== -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h2>
+                        Registered People
+                    </h2>
+
+                    <span class="title-badge">
+                        DATABASE
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="registeredPeople"
+                    class="registered-list"
+                >
+
+                    <div class="empty">
+                        Loading...
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="refresh"
+                        onclick="refreshDatabase()"
+                    >
+                        ↻ Refresh Database
+                    </button>
+
+
+                    <button
+                        class="events-button"
+                        onclick="window.location.href='/security_events'"
+                    >
+                        Security Events
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* ============================================================
+   GLOBAL STATE
+============================================================ */
+
+let lastData = null;
+
+let lastUnknownState = false;
+
+
+/* ============================================================
+   CAMERA ERROR
+============================================================ */
+
+function cameraError() {
+
+    const status =
+        document.getElementById(
+            "cameraStatus"
+        );
+
+    status.textContent =
+        "ERROR";
+
+    status.className =
+        "disconnected";
+
+    setStatus(
+        "cameraSystemStatus",
+        false
+    );
+}
+
+
+/* ============================================================
+   SET STATUS
+============================================================ */
+
+function setStatus(
+    elementId,
+    online
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+    if (!element) {
+        return;
+    }
+
+
+    element.textContent =
+        online
+            ? "ONLINE"
+            : "OFFLINE";
+
+
+    element.className =
+        online
+            ? "status-value"
+            : "status-value offline";
+}
+
+
+/* ============================================================
+   UPDATE STATUS
+============================================================ */
+
+function updateSystemStatus(data) {
+
+    setStatus(
+        "cameraSystemStatus",
+        data.camera_online === true
+    );
+
+
+    setStatus(
+        "aiSystemStatus",
+        data.ai_online === true
+    );
+
+
+    setStatus(
+        "objectSystemStatus",
+        data.object_detection_online === true
+    );
+
+
+    setStatus(
+        "databaseStatus",
+        data.database_online === true
+    );
+
+
+    const cameraStatus =
+        document.getElementById(
+            "cameraStatus"
+        );
+
+
+    if (
+        data.camera_online === true
+    ) {
+
+        cameraStatus.textContent =
+            "CONNECTED";
+
+        cameraStatus.className =
+            "connected";
+
+    }
+
+    else {
+
+        cameraStatus.textContent =
+            "OFFLINE";
+
+        cameraStatus.className =
+            "disconnected";
+
+    }
+
+
+    const objectBadge =
+        document.getElementById(
+            "objectLiveBadge"
+        );
+
+
+    if (
+        data.object_detection_online === true
+    ) {
+
+        objectBadge.textContent =
+            "YOLO ONLINE";
+
+    }
+
+    else {
+
+        objectBadge.textContent =
+            "YOLO OFFLINE";
+
+    }
+
+}
+
+
+/* ============================================================
+   UPDATE PEOPLE
+============================================================ */
+
+function updatePeople(
+    people
+) {
+
+    const container =
+        document.getElementById(
+            "people"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    if (
+        !people ||
+        people.length === 0
+    ) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No faces detected
+            </div>
+            `;
+
+        return;
+    }
+
+
+    people.forEach(
+        person => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "face-item";
+
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+
+            name.className =
+                "face-name";
+
+
+            name.textContent =
+                person.name;
+
+
+            const confidence =
+                document.createElement(
+                    "span"
+                );
+
+
+            confidence.className =
+                "face-confidence";
+
+
+            const score =
+                Number(
+                    person.confidence
+                );
+
+
+            confidence.textContent =
+                score.toFixed(2);
+
+
+            if (
+                person.name ===
+                "Unknown"
+            ) {
+
+                item.classList.add(
+                    "unknown"
+                );
+
+                name.classList.add(
+                    "unknown"
+                );
+
+                confidence.classList.add(
+                    "unknown"
+                );
+
+            }
+
+
+            item.appendChild(
+                name
+            );
+
+
+            item.appendChild(
+                confidence
+            );
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   UPDATE OBJECTS
+============================================================ */
+
+function updateObjects(
+    objects
+) {
+
+    const container =
+        document.getElementById(
+            "objects"
+        );
+
+
+    const summary =
+        document.getElementById(
+            "objectSummary"
+        );
+
+
+    container.innerHTML =
+        "";
+
+    summary.innerHTML =
+        "";
+
+
+    if (
+        !objects ||
+        objects.length === 0
+    ) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No objects detected
+            </div>
+            `;
+
+        return;
+    }
+
+
+    /* ------------------------------------------
+       Count object classes
+    ------------------------------------------ */
+
+    const counts = {};
+
+
+    objects.forEach(
+        object => {
+
+            const name =
+                object.name;
+
+
+            if (
+                counts[name]
+            ) {
+
+                counts[name]++;
+
+            }
+
+            else {
+
+                counts[name] = 1;
+
+            }
+
+        }
+    );
+
+
+    /* ------------------------------------------
+       Summary tags
+    ------------------------------------------ */
+
+    Object.keys(
+        counts
+    ).forEach(
+        name => {
+
+            const tag =
+                document.createElement(
+                    "span"
+                );
+
+
+            tag.className =
+                "object-tag";
+
+
+            tag.textContent =
+                name +
+                " × " +
+                counts[name];
+
+
+            summary.appendChild(
+                tag
+            );
+
+        }
+    );
+
+
+    /* ------------------------------------------
+       Detection list
+    ------------------------------------------ */
+
+    objects.forEach(
+        object => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "detection-item";
+
+
+            const name =
+                document.createElement(
+                    "span"
+                );
+
+
+            name.className =
+                "detection-name";
+
+
+            name.textContent =
+                object.name;
+
+
+            const confidence =
+                document.createElement(
+                    "span"
+                );
+
+
+            confidence.className =
+                "detection-confidence";
+
+
+            const score =
+                Number(
+                    object.confidence
+                );
+
+
+            confidence.textContent =
+                score.toFixed(2);
+
+
+            item.appendChild(
+                name
+            );
+
+
+            item.appendChild(
+                confidence
+            );
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   UPDATE REGISTERED PEOPLE
+============================================================ */
+
+function updateRegistered(
+    registered
+) {
+
+    const container =
+        document.getElementById(
+            "registeredPeople"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    if (
+        !registered ||
+        registered.length === 0
+    ) {
+
+        container.innerHTML =
+            `
+            <div class="empty">
+                No registered people
+            </div>
+            `;
+
+        return;
+    }
+
+
+    registered.forEach(
+        name => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "registered-person";
+
+
+            item.textContent =
+                name;
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* ============================================================
+   UPDATE STATISTICS
+============================================================ */
+
+function updateStatistics(
+    people,
+    objects
+) {
+
+    let authorized =
+        0;
+
+    let unknown =
+        0;
+
+
+    if (people) {
+
+        people.forEach(
+            person => {
+
+                if (
+                    person.name ===
+                    "Unknown"
+                ) {
+
+                    unknown++;
+
+                }
+
+                else {
+
+                    authorized++;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.getElementById(
+        "faceCount"
+    ).textContent =
+        people
+            ? people.length
+            : 0;
+
+
+    document.getElementById(
+        "objectCount"
+    ).textContent =
+        objects
+            ? objects.length
+            : 0;
+
+
+    document.getElementById(
+        "authorizedCount"
+    ).textContent =
+        authorized;
+
+
+    document.getElementById(
+        "unknownCount"
+    ).textContent =
+        unknown;
+
+
+    document.getElementById(
+        "faceInfo"
+    ).textContent =
+        people
+            ? people.length
+            : 0;
+
+
+    document.getElementById(
+        "objectInfo"
+    ).textContent =
+        objects
+            ? objects.length
+            : 0;
+
+}
+
+
+/* ============================================================
+   SECURITY ALERT
+============================================================ */
+
+function updateSecurityAlert(
+    people
+) {
+
+    const alert =
+        document.getElementById(
+            "securityAlert"
+        );
+
+
+    let unknownFound =
+        false;
+
+
+    if (people) {
+
+        unknownFound =
+            people.some(
+                person =>
+                    person.name ===
+                    "Unknown"
+            );
+
+    }
+
+
+    if (unknownFound) {
+
+        alert.style.display =
+            "block";
+
+    }
+
+    else {
+
+        alert.style.display =
+            "none";
+
+    }
+
+
+    lastUnknownState =
+        unknownFound;
+
+}
+
+
+/* ============================================================
+   LOAD LIVE DATA
+============================================================ */
+
+async function loadData() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/data",
+                {
+                    cache:
+                        "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        lastData =
+            data;
+
+
+        /* ------------------------------------------
+           System status
+        ------------------------------------------ */
+
+        updateSystemStatus(
+            data
+        );
+
+
+        /* ------------------------------------------
+           People
+        ------------------------------------------ */
+
+        const people =
+            data.people || [];
+
+
+        /* ------------------------------------------
+           Objects
+        ------------------------------------------ */
+
+        const objects =
+            data.objects || [];
+
+
+        updatePeople(
+            people
+        );
+
+
+        updateObjects(
+            objects
+        );
+
+
+        updateStatistics(
+            people,
+            objects
+        );
+
+
+        updateSecurityAlert(
+            people
+        );
+
+
+        updateRegistered(
+            data.registered || []
+        );
+
+
+        document.getElementById(
+            "registeredInfo"
+        ).textContent =
+            (
+                data.registered || []
+            ).length;
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+
+        document.getElementById(
+            "cameraStatus"
+        ).textContent =
+            "SERVER ERROR";
+
+
+        document.getElementById(
+            "cameraStatus"
+        ).className =
+            "disconnected";
+
+    }
+
+}
+
+
+/* ============================================================
+   REFRESH DATABASE
+============================================================ */
+
+async function refreshDatabase() {
+
+    const button =
+        event.target;
+
+
+    const originalText =
+        button.textContent;
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "Refreshing...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/refresh_database",
+                {
+                    cache:
+                        "no-store"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success
+        ) {
+
+            updateRegistered(
+                data.registered || []
+            );
+
+
+            document.getElementById(
+                "registeredInfo"
+            ).textContent =
+                (
+                    data.registered || []
+                ).length;
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Database refresh error:",
+            error
+        );
+
+    }
+
+
+    button.disabled =
+        false;
+
+
+    button.textContent =
+        originalText;
+
+}
+
+
+/* ============================================================
+   CAMERA CONNECTION CHECK
+============================================================ */
+
+function checkCameraImage() {
+
+    const camera =
+        document.getElementById(
+            "camera"
+        );
+
+
+    camera.onload =
+        function() {
+
+            const status =
+                document.getElementById(
+                    "cameraStatus"
+                );
+
+
+            status.textContent =
+                "CONNECTED";
+
+
+            status.className =
+                "connected";
+
+        };
+
+
+    camera.onerror =
+        function() {
+
+            cameraError();
+
+        };
+
+}
+
+
+/* ============================================================
+   AUTO UPDATE
+============================================================ */
+
+/*
+    500 ms gives the dashboard responsive updates
+    without unnecessarily hammering Flask.
+*/
+
+setInterval(
+    loadData,
+    500
+);
+
+
+/* ============================================================
+   INITIALIZATION
+============================================================ */
+
+checkCameraImage();
+
+loadData();
+
+</script>
+
+
+</body>
+
+</html>

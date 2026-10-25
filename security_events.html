@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DRISHTI Security Events</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #06120f;
+
+            color: #e8fff5;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+        }
+
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        header {
+
+            padding: 28px 40px;
+
+            border-bottom:
+                1px solid #17382e;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+        }
+
+
+        .logo {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #28ff9c;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .subtitle {
+
+            margin-top: 6px;
+
+            color: #83a99b;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================
+           HEADER BUTTONS
+        ===================================== */
+
+        .header-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+        button {
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-button {
+
+            background: transparent;
+
+            color: #28ff9c;
+
+            border:
+                1px solid #28ff9c;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #28ff9c;
+
+            color: #06120f;
+
+        }
+
+
+        .refresh-button {
+
+            background: #25f89a;
+
+            color: #02120c;
+
+            border: none;
+
+        }
+
+
+        .refresh-button:hover {
+
+            background: #55ffb4;
+
+        }
+
+
+        /* =====================================
+           MAIN CONTAINER
+        ===================================== */
+
+        .container {
+
+            max-width: 1400px;
+
+            margin: 30px auto;
+
+            padding: 0 25px;
+
+        }
+
+
+        /* =====================================
+           PAGE TITLE
+        ===================================== */
+
+        .page-title {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .page-title h1 {
+
+            margin: 0;
+
+            color: #31ff9d;
+
+            font-size: 28px;
+
+        }
+
+
+        .page-title p {
+
+            color: #77958b;
+
+            margin-top: 7px;
+
+        }
+
+
+        /* =====================================
+           STATISTICS
+        ===================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .stat-card {
+
+            background: #091a15;
+
+            border:
+                1px solid #174033;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            text-align: center;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #28ff9c;
+
+        }
+
+
+        .stat-number.unknown {
+
+            color: #ff5555;
+
+        }
+
+
+        .stat-label {
+
+            margin-top: 6px;
+
+            color: #83a99b;
+
+            font-size: 13px;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        /* =====================================
+           EVENTS CARD
+        ===================================== */
+
+        .events-card {
+
+            background: #091a15;
+
+            border:
+                1px solid #174033;
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            overflow: hidden;
+
+        }
+
+
+        .events-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .events-header h2 {
+
+            margin: 0;
+
+            color: #31ff9d;
+
+        }
+
+
+        .last-updated {
+
+            color: #77958b;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================
+           TABLE
+        ===================================== */
+
+        .table-container {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+            min-width: 700px;
+
+        }
+
+
+        th {
+
+            text-align: left;
+
+            padding: 14px;
+
+            background: #102a21;
+
+            color: #28ff9c;
+
+            font-size: 13px;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        td {
+
+            padding: 14px;
+
+            border-bottom:
+                1px solid #17382e;
+
+            color: #d9eee7;
+
+            font-size: 14px;
+
+        }
+
+
+        tr:hover td {
+
+            background: #0d241d;
+
+        }
+
+
+        /* =====================================
+           EVENT BADGES
+        ===================================== */
+
+        .status-badge {
+
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        .authorized {
+
+            color: #28ff9c;
+
+            background:
+                rgba(
+                    40,
+                    255,
+                    156,
+                    0.10
+                );
+
+            border:
+                1px solid
+                rgba(
+                    40,
+                    255,
+                    156,
+                    0.25
+                );
+
+        }
+
+
+        .unknown-status {
+
+            color: #ff5555;
+
+            background:
+                rgba(
+                    255,
+                    85,
+                    85,
+                    0.10
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    85,
+                    85,
+                    0.25
+                );
+
+        }
+
+
+        /* =====================================
+           CONFIDENCE
+        ===================================== */
+
+        .confidence-authorized {
+
+            color: #28ff9c;
+
+            font-weight: bold;
+
+        }
+
+
+        .confidence-unknown {
+
+            color: #ff5555;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================
+           EMPTY / ERROR
+        ===================================== */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #77958b;
+
+        }
+
+
+        .error {
+
+            color: #ff5555;
+
+            text-align: center;
+
+            padding: 30px;
+
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+
+            text-align: center;
+
+            color: #526f65;
+
+            font-size: 12px;
+
+            padding: 25px;
+
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 800px) {
+
+            header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+            }
+
+
+            .stats {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .header-buttons {
+
+                width: 100%;
+
+            }
+
+
+            .header-buttons button {
+
+                flex: 1;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+
+    <div>
+
+        <div class="logo">
+
+            DRISHTI
+
+        </div>
+
+
+        <div class="subtitle">
+
+            Real-Time Object Detection & Security Monitoring
+
+        </div>
+
+    </div>
+
+
+
+    <div class="header-buttons">
+
+
+        <button
+            class="back-button"
+            onclick="goDashboard()"
+        >
+
+            ← Dashboard
+
+        </button>
+
+
+        <button
+            class="refresh-button"
+            onclick="loadEvents()"
+        >
+
+            Refresh Events
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<div class="container">
+
+
+    <!-- =====================================
+         PAGE TITLE
+    ====================================== -->
+
+    <div class="page-title">
+
+
+        <h1>
+
+            Security Events
+
+        </h1>
+
+
+        <p>
+
+            Face recognition activity and access monitoring
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================
+         STATISTICS
+    ====================================== -->
+
+    <div class="stats">
+
+
+        <!-- TOTAL -->
+
+        <div class="stat-card">
+
+
+            <div
+                class="stat-number"
+                id="totalEvents"
+            >
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                TOTAL EVENTS
+
+            </div>
+
+        </div>
+
+
+
+        <!-- AUTHORIZED -->
+
+        <div class="stat-card">
+
+
+            <div
+                class="stat-number"
+                id="authorizedEvents"
+            >
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                AUTHORIZED
+
+            </div>
+
+        </div>
+
+
+
+        <!-- UNKNOWN -->
+
+        <div class="stat-card">
+
+
+            <div
+                class="stat-number unknown"
+                id="unknownEvents"
+            >
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                UNKNOWN
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         EVENTS CARD
+    ====================================== -->
+
+    <div class="events-card">
+
+
+        <div class="events-header">
+
+
+            <h2>
+
+                Event History
+
+            </h2>
+
+
+            <div
+                class="last-updated"
+                id="lastUpdated"
+            >
+
+                Connecting...
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TABLE -->
+
+        <div class="table-container">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            PERSON
+                        </th>
+
+                        <th>
+                            CONFIDENCE
+                        </th>
+
+                        <th>
+                            EVENT
+                        </th>
+
+                        <th>
+                            TIMESTAMP
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody
+                    id="eventsTable"
+                >
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="empty"
+                        >
+
+                            Loading security events...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<div class="footer">
+
+    DRISHTI Security Monitoring System
+
+</div>
+
+
+
+<script>
+
+
+/* ==========================================
+   DASHBOARD NAVIGATION
+========================================== */
+
+function goDashboard() {
+
+    window.location.href = "/";
+
+}
+
+
+
+/* ==========================================
+   FORMAT TIMESTAMP
+========================================== */
+
+function formatTimestamp(timestamp) {
+
+    if (!timestamp) {
+
+        return "-";
+
+    }
+
+
+    try {
+
+        const date =
+            new Date(
+                timestamp.replace(
+                    " ",
+                    "T"
+                )
+            );
+
+
+        if (
+            isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return timestamp;
+
+        }
+
+
+        return date.toLocaleString();
+
+    }
+
+    catch (error) {
+
+        return timestamp;
+
+    }
+
+}
+
+
+
+/* ==========================================
+   LOAD SECURITY EVENTS
+========================================== */
+
+async function loadEvents() {
+
+    try {
+
+
+        /*
+         * IMPORTANT
+         *
+         * /security_events
+         *      -> HTML PAGE
+         *
+         * /api/security_events
+         *      -> JSON DATA
+         */
+
+        const response =
+            await fetch(
+                "/api/security_events",
+                {
+                    method: "GET",
+
+                    cache: "no-store"
+                }
+            );
+
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server returned HTTP " +
+                response.status
+            );
+
+        }
+
+
+
+        const data =
+            await response.json();
+
+
+
+        if (
+            !data.success
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to retrieve events"
+            );
+
+        }
+
+
+
+        const events =
+            Array.isArray(
+                data.events
+            )
+                ? data.events
+                : [];
+
+
+
+        /* =================================
+           COUNTERS
+        ================================= */
+
+        let authorized = 0;
+
+        let unknown = 0;
+
+
+        events.forEach(
+            event => {
+
+
+                if (
+                    String(
+                        event.event_type
+                    ).toUpperCase()
+                    ===
+                    "AUTHORIZED"
+                ) {
+
+                    authorized++;
+
+                }
+
+
+                else if (
+                    String(
+                        event.event_type
+                    ).toUpperCase()
+                    ===
+                    "UNKNOWN"
+                ) {
+
+                    unknown++;
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================
+           UPDATE STATISTICS
+        ================================= */
+
+        document.getElementById(
+            "totalEvents"
+        ).textContent =
+            events.length;
+
+
+        document.getElementById(
+            "authorizedEvents"
+        ).textContent =
+            authorized;
+
+
+        document.getElementById(
+            "unknownEvents"
+        ).textContent =
+            unknown;
+
+
+
+        /* =================================
+           TABLE
+        ================================= */
+
+        const table =
+            document.getElementById(
+                "eventsTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+
+        /* =================================
+           NO EVENTS
+        ================================= */
+
+        if (
+            events.length === 0
+        ) {
+
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+
+                        No security events recorded
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+        }
+
+
+        else {
+
+
+            /*
+             * Sort newest first.
+             *
+             * The API already returns
+             * newest first, but we sort
+             * here as an extra safeguard.
+             */
+
+            const sortedEvents =
+                [...events].sort(
+                    function(a, b) {
+
+                        const dateA =
+                            new Date(
+                                String(
+                                    a.timestamp ||
+                                    ""
+                                ).replace(
+                                    " ",
+                                    "T"
+                                )
+                            );
+
+
+                        const dateB =
+                            new Date(
+                                String(
+                                    b.timestamp ||
+                                    ""
+                                ).replace(
+                                    " ",
+                                    "T"
+                                )
+                            );
+
+
+                        return (
+                            dateB - dateA
+                        );
+
+                    }
+                );
+
+
+
+            /* =================================
+               CREATE TABLE ROWS
+            ================================= */
+
+            sortedEvents.forEach(
+                event => {
+
+
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+
+                    /* =========================
+                       ID
+                    ========================= */
+
+                    const idCell =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    idCell.textContent =
+                        event.id ?? "-";
+
+
+
+                    /* =========================
+                       PERSON
+                    ========================= */
+
+                    const personCell =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    const personName =
+                        event.person_name ||
+                        "Unknown";
+
+
+                    personCell.textContent =
+                        personName;
+
+
+
+                    /* =========================
+                       CONFIDENCE
+                    ========================= */
+
+                    const confidenceCell =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    let score =
+                        Number(
+                            event.confidence
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            score
+                        )
+                    ) {
+
+                        score = 0;
+
+                    }
+
+
+                    confidenceCell.textContent =
+                        score.toFixed(2);
+
+
+
+                    const eventType =
+                        String(
+                            event.event_type ||
+                            "UNKNOWN"
+                        ).toUpperCase();
+
+
+
+                    if (
+                        eventType ===
+                        "UNKNOWN"
+                    ) {
+
+                        confidenceCell.className =
+                            "confidence-unknown";
+
+                    }
+
+                    else {
+
+                        confidenceCell.className =
+                            "confidence-authorized";
+
+                    }
+
+
+
+                    /* =========================
+                       EVENT TYPE
+                    ========================= */
+
+                    const eventCell =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    const badge =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    badge.className =
+                        "status-badge";
+
+
+
+                    if (
+                        eventType ===
+                        "AUTHORIZED"
+                    ) {
+
+
+                        badge.classList.add(
+                            "authorized"
+                        );
+
+
+                        badge.textContent =
+                            "AUTHORIZED";
+
+                    }
+
+
+                    else {
+
+
+                        badge.classList.add(
+                            "unknown-status"
+                        );
+
+
+                        badge.textContent =
+                            "UNKNOWN";
+
+                    }
+
+
+
+                    eventCell.appendChild(
+                        badge
+                    );
+
+
+
+                    /* =========================
+                       TIMESTAMP
+                    ========================= */
+
+                    const timestampCell =
+                        document.createElement(
+                            "td"
+                        );
+
+
+                    timestampCell.textContent =
+                        formatTimestamp(
+                            event.timestamp
+                        );
+
+
+
+                    /* =========================
+                       ADD CELLS
+                    ========================= */
+
+                    row.appendChild(
+                        idCell
+                    );
+
+
+                    row.appendChild(
+                        personCell
+                    );
+
+
+                    row.appendChild(
+                        confidenceCell
+                    );
+
+
+                    row.appendChild(
+                        eventCell
+                    );
+
+
+                    row.appendChild(
+                        timestampCell
+                    );
+
+
+                    table.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           LAST UPDATED
+        ================================= */
+
+        document.getElementById(
+            "lastUpdated"
+        ).textContent =
+            "Last updated: " +
+            new Date()
+                .toLocaleTimeString();
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Security events error:",
+            error
+        );
+
+
+        /* ================================
+           RESET COUNTERS
+        ================================= */
+
+        document.getElementById(
+            "totalEvents"
+        ).textContent = "—";
+
+
+        document.getElementById(
+            "authorizedEvents"
+        ).textContent = "—";
+
+
+        document.getElementById(
+            "unknownEvents"
+        ).textContent = "—";
+
+
+
+        /* ================================
+           SHOW ERROR
+        ================================= */
+
+        document.getElementById(
+            "eventsTable"
+        ).innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="error"
+                >
+
+                    Unable to load security events.
+
+                    <br><br>
+
+                    Make sure the DRISHTI server
+                    is running.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        document.getElementById(
+            "lastUpdated"
+        ).textContent =
+            "Connection error";
+
+    }
+
+}
+
+
+
+/* ==========================================
+   INITIAL LOAD
+========================================== */
+
+loadEvents();
+
+
+
+/* ==========================================
+   AUTO REFRESH
+========================================== */
+
+setInterval(
+    loadEvents,
+    3000
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DRISHTI | Register Person</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #06100d;
+            color: #eafff5;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 94%;
+            padding: 35px;
+            background: #091914;
+            border: 1px solid #173d2f;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            margin: 0;
+            color: #39ff88;
+            font-size: 40px;
+        }
+
+        .subtitle {
+            color: #8da99d;
+            margin: 8px 0 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .upload-box {
+            height: 380px;
+            border: 2px dashed #285242;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            overflow: hidden;
+            background: #050d0a;
+        }
+
+        .upload-box:hover {
+            border-color: #39ff88;
+        }
+
+        .upload-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: #9eb8ad;
+        }
+
+        #preview {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #a4bdb3;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: #06100d;
+            border: 1px solid #285242;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #39ff88;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #39ff88;
+            color: #031008;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 10px;
+            background: #0c241b;
+            color: #7dffb0;
+            text-align: center;
+        }
+
+        @media(max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>DRISHTI</h1>
+
+    <div class="subtitle">
+        Face Registration & Identity Management
+    </div>
+
+    <div class="grid">
+
+        <!-- IMAGE UPLOAD -->
+
+        <label class="upload-box" for="faceImage">
+
+            <div id="uploadContent">
+
+                <div class="upload-icon">📷</div>
+
+                <div>
+                    Click to upload face image
+                </div>
+
+                <div class="upload-text">
+                    JPG / JPEG / PNG
+                </div>
+
+            </div>
+
+            <img id="preview">
+
+        </label>
+
+        <input
+            type="file"
+            id="faceImage"
+            accept=".jpg,.jpeg,.png"
+        >
+
+        <!-- DETAILS -->
+
+        <div>
+
+            <label for="name">
+                Person Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter person's name"
+            >
+
+            <button onclick="registerPerson()">
+                REGISTER PERSON
+            </button>
+
+            <div class="status" id="status">
+                Waiting for face image
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const fileInput = document.getElementById("faceImage");
+const preview = document.getElementById("preview");
+const uploadContent = document.getElementById("uploadContent");
+
+fileInput.addEventListener("change", function() {
+
+    const file = this.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        preview.src = e.target.result;
+        preview.style.display = "block";
+        uploadContent.style.display = "none";
+
+        document.getElementById("status").innerText =
+            "Face image selected ✓";
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+function registerPerson() {
+
+    const name = document.getElementById("name").value.trim();
+    const file = fileInput.files[0];
+
+    if (!name) {
+
+        alert("Please enter the person's name.");
+
+        return;
+    }
+
+    if (!file) {
+
+        alert("Please upload a face image.");
+
+        return;
+    }
+
+    document.getElementById("status").innerText =
+        "Ready to register " + name + " ✓";
+
+}
+
+</script>
+
+</body>
+</html>
